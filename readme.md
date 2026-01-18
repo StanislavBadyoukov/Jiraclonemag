@@ -2,3 +2,4 @@
 - Создать файл env в папке /server, инициализировать значение SECRET_KEY=****
 - запустить server.js
 - запустить client
+- запустить docker.compose
