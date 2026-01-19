@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from "../../axios";
 
 export default function TaskTitle({task}){
     const [name, setName] = useState(task.name);
@@ -8,7 +8,7 @@ export default function TaskTitle({task}){
 
     
     const changeName = () => {
-        axios.put(`http://localhost:8000/api/tasks/${task._id}`, {name: newName}, {withCredentials: true,})
+        api.put(`/api/tasks/${task._id}`, {name: newName}, {withCredentials: true,})
             .then(res => {
                 setName(newName);
                 setSelected(false);

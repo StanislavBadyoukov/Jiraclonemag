@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from "../../axios";
 import { FormControl } from 'react-bootstrap';
 // import Select from 'react-dropdown-select';
 import styles from './task.module.css';
@@ -18,9 +18,8 @@ export default function TaskAssignee({
             value = null;
         }
 
-        axios
-            .put(
-                `http://localhost:8000/api/tasks/${currentTask._id}`,
+        api.put(
+                `/api/tasks/${currentTask._id}`,
                 { assignee: value },
                 { withCredentials: true }
             )

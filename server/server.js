@@ -6,17 +6,20 @@ const cookieParser = require('cookie-parser');
 const socketIo = require('socket.io');
 
 require('../server/config/mongoose.config');
-require('dotenv').config({ path: __dirname + '/./.env' });
+require('dotenv').config({path: __dirname + '/./.env'});
 app.use(cookieParser());
-app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
+app.use(cors({credentials: true, origin: process.env.FRONTEND_URI}));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({extended: true}));
 require('./routes/user.routes')(app);
 require('./routes/project.routes')(app);
 require('./routes/task.routes')(app);
 
-const server = app.listen(port, () =>
-    console.log(`Listening on port: ${port}`)
+const server = app.listen(port, () => {
+        console.log(`Listening on port: ${port}`);
+        console.log(process.env.SECRET_KEY);
+        console.log(process.env.MONGODB_DOMEN);
+    }
 );
 
 const io = socketIo(server);

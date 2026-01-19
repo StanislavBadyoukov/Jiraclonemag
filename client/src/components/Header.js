@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './header.module.css';
 import { Dropdown, ButtonGroup, NavDropdown, FormControl } from 'react-bootstrap';
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
-import Axios from 'axios';
+import api from "../axios";
 import { navigate } from '@reach/router';
 
 export default function Header(props) {
@@ -12,7 +12,7 @@ export default function Header(props) {
     function selectProject(project) {
         setCurrentProject(project);
         //Do a new request to get the new tasks in case they have been updated
-        Axios.get('http://localhost:8000/api/projects/'+project._id)
+        api.get(`/api/projects/`+project._id)
             .then(res =>{
                 setTasks(res.data.tasks);
                 setFilteredTasks(res.data.tasks);
@@ -24,8 +24,8 @@ export default function Header(props) {
         //Get value from projectName component
         const name = document.getElementById('projectName').value;
 
-        Axios.post(
-            'http://localhost:8000/api/projects',
+        api.post(
+            `/api/projects`,
             { name, users: [localStorage.getItem('userID')] },
             { withCredentials: true }
         )
@@ -40,7 +40,7 @@ export default function Header(props) {
     function signOut() {
         localStorage.clear();
         navigate('/login');
-        // Axios.delete('http://localhost:8000/api/logout').then((res) => {
+        // api.delete('/api/logout').then((res) => {
         //     console.log('Successfully logged out');
         //     localStorage.clear();
         //     navigate('/login');
@@ -50,8 +50,8 @@ export default function Header(props) {
     useEffect(() => {
         //Load projects
 
-        Axios.get(
-            'http://localhost:8000/api/projects/user/' +
+        api.get(
+            `/api/projects/user/` +
                 localStorage.getItem('userID'),
             { withCredentials: true }
         ).then((projects) => {

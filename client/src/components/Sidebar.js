@@ -1,6 +1,6 @@
 import React, { useState} from 'react';
 import styles from './sidebar.module.css';
-import Axios from 'axios';
+import api from "../axios";
 import { navigate } from '@reach/router';
 import {Modal, Button} from 'react-bootstrap';
 
@@ -52,7 +52,7 @@ export default function Sidebar(props) {
 
     //Handle deleting the current project
     function deleteProject(){
-        Axios.delete('http://localhost:8000/api/projects/'+currentProj._id)
+        api.delete(`/api/projects/`+currentProj._id)
             .then(res =>{
                 //Remove project from all projects
                 handleClose();

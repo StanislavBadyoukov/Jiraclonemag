@@ -4,7 +4,7 @@ import Sidebar from '../components/Sidebar';
 import NewTask from '../components/NewTask';
 import TaskParent from '../components/TaskParent';
 import { Modal } from 'react-bootstrap';
-import Axios from 'axios';
+import api from "../axios";
 import ProjectSettings from '../components/ProjectSettings';
 import io from 'socket.io-client';
 import { navigate } from '@reach/router';
@@ -28,8 +28,8 @@ export default function Main({ id }) {
             navigate('/login');
             return;
         }
-        Axios.get(
-            'http://localhost:8000/api/projects/user/' +
+        api.get(
+            `/api/projects/user/` +
                 localStorage.getItem('userID'),
             { withCredentials: true }
         ).then((res) => {
@@ -44,13 +44,13 @@ export default function Main({ id }) {
             setTasks(res.data[0].tasks);
         });
 
-        Axios.get('http://localhost:8000/api/users', {
+        api.get(`/api/users`, {
             withCredentials: true,
         }).then((users) => setAllUsers(users.data));
 
         //new
         if (id) {
-            Axios.get('http://localhost:8000/api/tasks/' + id, {
+            api.get(`/api/tasks/` + id, {
                 withCredentials: true,
             })
                 .then((res) => setTask(res.data))

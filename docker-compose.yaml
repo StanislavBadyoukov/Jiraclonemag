@@ -3,10 +3,36 @@ services:
     image: mongo:latest
     container_name: mongodb_container
     restart: always
-    ports: 
+    ports:
       - "27017:27017"
-    volumes: 
+    volumes:
       - mongo_data:/data/db
+
+  frontend:
+    build:
+      args:
+        - REACT_APP_API_BASE_URL=???
+      context: client
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "3000:80"
+    restart: always
+
+  backend:
+    build:
+      context: server
+      dockerfile: Dockerfile
+    container_name: backend
+    environment:
+      SECRET_KEY: ???
+      MONGODB_DOMEN: ???
+      FRONTEND_URI: ???
+    ports:
+      - "8000:8000"
+    restart: always
+    depends_on:
+      - mongodb
 
 volumes:
   mongo_data:

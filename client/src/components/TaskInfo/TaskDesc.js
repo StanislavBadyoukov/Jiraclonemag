@@ -1,5 +1,5 @@
 import React, { useState} from 'react';
-import axios from 'axios';
+import api from "../../axios";
 import styles from './task.module.css';
 
 
@@ -9,7 +9,7 @@ export default function TaskDesc({task}) {
     const id = task._id;
 
     const saveDesc = () => {
-        axios.put(`http://localhost:8000/api/tasks/${id}`, 
+        api.put(`/api/tasks/${id}`,
                 { description: newDescription }, 
                 { withCredentials: true }
                 )

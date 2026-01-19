@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from "../axios";
 import { navigate } from '@reach/router';
 import { useEffect } from 'react';
 
@@ -18,8 +18,8 @@ export default function NewUser() {
 
     const createProject = () =>{
 
-        axios.post(
-            'http://localhost:8000/api/projects',
+        api.post(
+            `/api/projects`,
             { name, users: [localStorage.getItem('userID')] },
             { withCredentials: true }
         )

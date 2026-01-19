@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from "../../axios";
 import styles from './task.module.css';
 import io from 'socket.io-client';
 
@@ -14,9 +14,9 @@ export default function TaskComments({ task }) {
             sender: localStorage.getItem('userName'),
             message: newComment,
         };
-        axios
-            .put(
-                `http://localhost:8000/api/tasks/${id}`,
+
+        api.put(
+                `/api/tasks/${id}`,
                 { comments: [...comments, newCom] },
                 { withCredentials: true }
             )

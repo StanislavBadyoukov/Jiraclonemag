@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Form, Button } from 'react-bootstrap';
+import React, {useEffect, useState} from 'react';
+import api from "../axios";
+import {Button, Form} from 'react-bootstrap';
 
 export default function TaskContent(props) {
     const [task, setTask] = useState(null);
@@ -22,10 +22,9 @@ export default function TaskContent(props) {
     const [newComment, setNewComment] = useState('');
 
     useEffect(() => {
-        axios
-            .get('http://localhost:8000/api/tasks/' + props.taskNumber, {
-                withCredentials: true,
-            })
+        api.get(`/api/tasks/` + props.taskNumber, {
+            withCredentials: true,
+        })
             .then((res) => {
                 // Destructuring for DRY
                 setTask(res.data);
@@ -44,10 +43,9 @@ export default function TaskContent(props) {
             })
             .catch(console.log);
 
-        axios
-            .get('http://localhost:8000/api/users', {
-                withCredentials: true,
-            })
+        api.get(`/api/users`, {
+            withCredentials: true,
+        })
             .then((res) => setUsers(res.data))
             .catch(console.log);
     }, [props.taskNumber]);
@@ -59,8 +57,8 @@ export default function TaskContent(props) {
             sender: localStorage.getItem('userName'),
             message: newComment
         }
-        if(newComment !== ''){
-            if(comments.length>0) setComments(...comments, newCom);
+        if (newComment !== '') {
+            if (comments.length > 0) setComments(...comments, newCom);
             else setComments([newCom]);
         }
 
@@ -79,14 +77,13 @@ export default function TaskContent(props) {
             status,
         };
 
-        axios
-            .put(
-                `http://localhost:8000/api/tasks/${props.taskNumber}`,
-                updatedTask,
-                {
-                    withCredentials: true,
-                }
-            )
+        api.put(
+            `/api/tasks/${props.taskNumber}`,
+            updatedTask,
+            {
+                withCredentials: true,
+            }
+        )
             .then((res) => setTask(res.data))
             .catch((err) => {
                 const errorResponse = err.response.data.errors;
@@ -116,7 +113,7 @@ export default function TaskContent(props) {
                     ))}
                     <p>
                         <img
-                            style={{ width: '18px' }}
+                            style={{width: '18px'}}
                             src="https://upload.wikimedia.org/wikipedia/donate/thumb/8/89/Ooui-checkbox-selected.svg/1024px-Ooui-checkbox-selected.svg.png"
                             alt="check"
                         />

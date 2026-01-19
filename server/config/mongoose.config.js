@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect("mongodb://localhost/jiradb", {
+mongoose.connect(`mongodb://${process.env.MONGODB_DOMEN}/jiradb`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true

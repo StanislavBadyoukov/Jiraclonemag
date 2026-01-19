@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from "../../axios";
 import { FormControl } from 'react-bootstrap';
 import styles from './task.module.css';
 
@@ -10,7 +10,7 @@ export default function TaskPriority({ currentTask, setTask }) {
 
 
     const handleChange = (value) => {
-        axios.put(`http://localhost:8000/api/tasks/${currentTask._id}`,
+        api.put(`/api/tasks/${currentTask._id}`,
                 { priority: value },
                 { withCredentials: true }
             )

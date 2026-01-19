@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import axios from 'axios';
+import api from "../axios";
 import io from 'socket.io-client';
 import {Button, Form} from 'react-bootstrap';
 
@@ -37,10 +37,9 @@ export default function NewTask({
             projectID,
         };
 
-        axios
-            .post('http://localhost:8000/api/tasks/', newTask, {
-                withCredentials: true,
-            })
+        api.post(`/api/tasks/`, newTask, {
+            withCredentials: true,
+        })
             .then((res) => {
                 //broadcasts new task so the issues list will auto update
                 socket.emit('new task created', res.data.task);
@@ -67,7 +66,7 @@ export default function NewTask({
 
         // axios
         //     .put(
-        //         `http://localhost:8000/api/projects/${
+        //         `/api/projects/${
         //             project._id
         //         }/${localStorage.getItem('userId')}`
         //     )
@@ -97,7 +96,7 @@ export default function NewTask({
 
         // axios
         //     .put(
-        //         'http://localhost:8000/api/projects' + project._id,
+        //         '/api/projects' + project._id,
         //         updatedProj,
         //         { withCredentials: true }
         //     )

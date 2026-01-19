@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Axios from 'axios';
+import api from "../axios";
 import { navigate, Link } from '@reach/router';
 
 const Registration = (props) => {
@@ -18,7 +18,7 @@ const Registration = (props) => {
             password,
             confirmPassword
         }
-        Axios.post('http://localhost:8000/api/users', newUser, {withCredentials: true})
+        api.post(`/api/users`, newUser, {withCredentials: true})
             .then(res =>{
                 // console.log("User created successfully: " + res.data.user_id);
                 localStorage.setItem('userID', res.data.user._id);

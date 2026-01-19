@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Axios from 'axios';
+import api from "../axios";
 
 const ProjectSettings = (props) => {
 
@@ -11,11 +11,11 @@ const ProjectSettings = (props) => {
     const [allUsers, setAllUsers] = useState([]);
 
     useEffect(()=>{
-        Axios.get('http://localhost:8000/api/users')
+        api.get(`/api/users`)
             .then(res => {
                 setAllUsers(res.data);
             })
-        Axios.get('http://localhost:8000/api/projects/'+currentProj._id)
+        api.get(`/api/projects/`+currentProj._id)
         .then(res =>{
             setProjectName(res.data.name);
             setProjectUsers(res.data.users);
@@ -40,7 +40,7 @@ const ProjectSettings = (props) => {
         //Update currentProj fields so data updates on frontend
         currentProj.name = projectName;
         setCurrentProj(currentProj);
-        Axios.put('http://localhost:8000/api/projects/'+currentProj._id, projectUpdates, {withCredentials: true})
+        api.put(`/api/projects/`+currentProj._id, projectUpdates, {withCredentials: true})
             .then(res =>{
                 setCurrentView("tasks");
             })

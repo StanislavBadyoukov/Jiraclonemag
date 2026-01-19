@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { FormControl } from 'react-bootstrap';
+import React, {useState} from 'react';
+import api from "../../axios";
+import {FormControl} from 'react-bootstrap';
 
-export default function TaskDueDate({ currentTask }) {
+export default function TaskDueDate({currentTask}) {
     const [dueDate, setDueDate] = useState(currentTask.dueDate);
 
     const handleChange = (value) => {
@@ -10,12 +10,11 @@ export default function TaskDueDate({ currentTask }) {
         // console.log('this is the current task: ', currentTask);
         setDueDate(value);
 
-        axios
-            .put(
-                `http://localhost:8000/api/tasks/${currentTask._id}`,
-                { dueDate: value },
-                { withCredentials: true }
-            )
+        api.put(
+            `/api/tasks/${currentTask._id}`,
+            {dueDate: value},
+            {withCredentials: true}
+        )
             .then((res) => res.data)
             .catch(console.log);
     };

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { FormControl } from 'react-bootstrap';
+import React, {useState} from 'react';
+import {FormControl} from 'react-bootstrap';
+import api from "../../axios";
 
 export default function TaskEstimate(currentTask) {
     const [estimate, setEstimate] = useState(currentTask.estimate);
@@ -8,12 +8,11 @@ export default function TaskEstimate(currentTask) {
     const handleChange = (value) => {
         setEstimate(value);
 
-        axios
-            .put(
-                `http://localhost:8000/api/tasks/${currentTask.number}`,
-                { estimate: value },
-                { withCredentials: true }
-            )
+        api.put(
+            `/api/tasks/${currentTask.number}`,
+            {estimate: value},
+            {withCredentials: true}
+        )
             .then((res) => res.data)
             .catch(console.log);
     };

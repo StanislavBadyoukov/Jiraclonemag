@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, navigate } from '@reach/router';
-import Axios from 'axios';
+import api from "../axios";
 
 const Login = (props) => {
     const [email, setEmail] = useState('');
@@ -13,7 +13,7 @@ const Login = (props) => {
             email,
             password
         }
-        Axios.post('http://localhost:8000/api/users/login', user, {withCredentials: true})
+        api.post(`/api/users/login`, user, {withCredentials: true})
             .then(res =>{
                 localStorage.setItem('userID', res.data.user._id);
                 localStorage.setItem('userName', res.data.user.name);
